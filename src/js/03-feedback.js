@@ -35,12 +35,14 @@ const onFormElInput = event => {
 
 const onFormSubmit = event => {
   event.preventDefault();
+  const currentEl = formEl.elements;
+  // console.log();
+
   // Очищуємо local storage
   localStorageApi.remove(storageKey);
   // Reset для очищення полів форми
   event.currentTarget.reset();
   //
-  console.log(formElName, formElValue);
 };
 // Додаємо слухачів
 formEl.addEventListener('input', onFormElInput);
