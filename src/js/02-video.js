@@ -12,7 +12,9 @@ const saveCurrentTime = function (data) {
   );
 };
 
-player.on('timeupdate', _.throttle(saveCurrentTime, 1000));
+// player.on('timeupdate', _.throttle(saveCurrentTime, 1000));
+
+player.on('timeupdate', saveCurrentTime);
 
 const videoCurrentTime = localStorage.getItem(storageKey);
 

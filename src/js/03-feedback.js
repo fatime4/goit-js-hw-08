@@ -1,4 +1,5 @@
 import localStorageApi from './localstorage';
+import _ from 'lodash.throttle';
 
 const formEl = document.querySelector('.feedback-form');
 // Визначаємо перемінні
@@ -6,7 +7,7 @@ const storageKey = 'feedback-form-state';
 const userData = {};
 // При заповненні поля форми
 const formFieldsFill = () => {
-  const userDatafromLS = localStorageApi.load('formData');
+  const userDatafromLS = localStorageApi.load(storageKey);
 
   if (userDatafromLS === undefined) {
     return;
@@ -29,18 +30,21 @@ const onFormElInput = event => {
 
   userData[formElName] = formElValue;
 
-  localStorageApi.save('formData', userData);
+  localStorageApi.save(storageKey, userData);
 };
 
 const onFormSubmit = event => {
   event.preventDefault();
   // Очищуємо local storage
-  localStorageApi.remove('formData');
+  localStorageApi.remove(storageKey);
   // Reset для очищення полів форми
   event.currentTarget.reset();
+  //
+  console.log(formElName, formElValue);
 };
 // Додаємо слухачів
 formEl.addEventListener('input', onFormElInput);
+// formEl.addEventListener('input', _.throttle(onFormElInput), 500);
 formEl.addEventListener('submit', onFormSubmit);
 
 formFieldsFill();
