@@ -1,5 +1,5 @@
 import localStorageApi from './localstorage';
-import _ from 'lodash.throttle';
+import throttle from 'lodash.throttle';
 
 const formEl = document.querySelector('.feedback-form');
 // Визначаємо перемінні
@@ -36,17 +36,17 @@ const onFormElInput = event => {
 const onFormSubmit = event => {
   event.preventDefault();
   const currentEl = formEl.elements;
-  // console.log();
 
   // Очищуємо local storage
   localStorageApi.remove(storageKey);
+  console.log(userData);
   // Reset для очищення полів форми
   event.currentTarget.reset();
   //
 };
 // Додаємо слухачів
-formEl.addEventListener('input', onFormElInput);
-// formEl.addEventListener('input', _.throttle(onFormElInput), 500);
+
+formEl.addEventListener('input', throttle(onFormElInput, 500));
 formEl.addEventListener('submit', onFormSubmit);
 
 formFieldsFill();
